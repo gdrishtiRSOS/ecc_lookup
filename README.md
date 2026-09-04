@@ -13,7 +13,7 @@ result = lookup_county("06037")   # 5-digit county FIPS/GEOID, equivalent
 
 **Informational only — never authoritative for 9-1-1 routing, dispatch, or emergency response.**
 
-This is a component, not an application: it returns data rather than writing files, it doesn't own a cache directory or a config file, and the CLI below is a convenience, not the primary interface. See `CLAUDE.md` for the full design spec and rationale.
+This is a component, not an application: it returns data rather than writing files, it doesn't own a cache directory or a config file, and the CLI below is a convenience, not the primary interface.
 
 ## Install
 
@@ -92,8 +92,6 @@ Always prints the full JSON result to stdout; `--output-dir`, if given, addition
 - **Geometry**: US Census Bureau cartographic boundary files, national county layer, pinned to the 2025 vintage. Public domain, no key, no rate limit. Cached on first use (per `cache_dir`).
 - **Jurisdiction scope**: FCC 911 Master PSAP Registry. **Note:** FCC's own registry page is behind bot protection and not programmatically reachable from this environment; the implementation uses the `opendata.fcc.gov` Socrata mirror instead, which is confirmed **stale since 2019-02-26** — recorded honestly in `result["sources"]` on every call, never hidden. If the registry is unreachable, `lookup_county` still returns geometry, with `jurisdiction_scope.status == "unavailable"` — it never raises for a registry outage.
 
-See `CLAUDE.md`'s "Data sources" and "Join failure modes" sections for the full detail, including the known-messy Connecticut (planning regions) and Alaska (Census-area renames/splits) cases.
-
 ## Testing
 
 ```bash
@@ -110,7 +108,6 @@ requirements.txt         # one line: geopandas
 tests/
 ├── conftest.py          # blocks network access, isolates cache dirs, for every test
 └── test_ecc_lookup.py
-CLAUDE.md                # full design spec, constraints, and build rationale
 ```
 
 No package directory, no `__init__.py`, no `pyproject.toml` — dropping this into a larger project means copying `ecc_lookup.py`.
