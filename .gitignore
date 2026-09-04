@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# never commit downloaded/cached data
+*.zip
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+.cache/
